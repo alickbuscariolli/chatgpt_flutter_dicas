@@ -13,6 +13,7 @@ class ChatGPTScreen extends StatefulWidget {
 
 class _ChatGPTScreenState extends State<ChatGPTScreen> {
   final _inputCtrl = TextEditingController();
+  final _inputFN = FocusNode();
   final _repository = ChatGPTRepository(Dio());
   final _messages = <ChatModel>[];
   final _scrollCtrl = ScrollController();
@@ -78,6 +79,7 @@ class _ChatGPTScreenState extends State<ChatGPTScreen> {
                 ),
               ),
               TextField(
+                focusNode: _inputFN,
                 style: const TextStyle(
                   fontSize: 18,
                   color: Colors.white,
@@ -108,6 +110,8 @@ class _ChatGPTScreenState extends State<ChatGPTScreen> {
                   filled: true,
                   suffixIcon: IconButton(
                     onPressed: () async {
+                      _inputFN.unfocus();
+
                       if (_inputCtrl.text.isNotEmpty) {
                         final prompt = _inputCtrl.text;
 
